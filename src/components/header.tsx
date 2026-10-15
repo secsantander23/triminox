@@ -2,42 +2,45 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useI18n } from "@/lib/i18n";
 
-const NAV = [
-  { href: "/#projeto", label: "O projeto" },
-  { href: "/#valores", label: "Valores" },
-  { href: "/manual#regras", label: "Como jogar" },
-  { href: "/manual#catalogo", label: "Catálogo" },
-] as const;
+/** Marca do jogo: um triângulo com as três pontas em destaque. */
+function LogoMark() {
+  return (
+    <svg viewBox="0 0 40 36" aria-hidden="true" className="size-8 shrink-0">
+      <path
+        d="M20 4 L36 32 L4 32 Z"
+        fill="var(--color-crimson)"
+        stroke="var(--color-crimson-700)"
+        strokeWidth="2.5"
+        strokeLinejoin="round"
+      />
+      <circle cx="20" cy="15" r="2.6" fill="var(--color-cream-50)" />
+      <circle cx="13.5" cy="26" r="2.6" fill="var(--color-cream-50)" />
+      <circle cx="26.5" cy="26" r="2.6" fill="var(--color-cream-50)" />
+    </svg>
+  );
+}
 
 export function Header() {
+  const { dict } = useI18n();
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [open, setOpen] = useState(false);
 
+  const nav = [
+    { href: "/#sobre", label: dict.nav.about },
+    { href: "/#pecas", label: dict.nav.pieces },
+    { href: "/#cartas", label: dict.nav.cards },
+    { href: "/#como-funciona", label: dict.nav.how },
+    { href: "/#galeria", label: dict.nav.gallery },
+  ];
+
   useEffect(() => {
-    let frame = 0;
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        const y = window.scrollY;
-        setScrolled(y > 24);
-
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(max > 0 ? Math.min(y / max, 1) : 0);
-      });
-    };
-
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Fecha o menu móvel ao voltar para desktop.
@@ -52,8 +55,8 @@ export function Header() {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -61,164 +64,112 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 ${
         scrolled
-          ? "border-b border-travertine-300/12 bg-ink-950/85 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
+          ? "border-b-2 border-cream-300 bg-cream/90 shadow-sm backdrop-blur-md"
+          : "border-b-2 border-transparent"
       }`}
     >
-      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-7xl items-center justify-between gap-3 px-5 sm:px-8">
         <Link
           href="/"
-          className="group flex items-center gap-2.5 rounded-md py-1"
-          aria-label="Triminox — início"
+          className="flex shrink-0 items-center gap-2.5"
+          aria-label={`${dict.hero.title} — ${dict.nav.home}`}
         >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            className="size-7 shrink-0 text-aureum-400 transition-transform duration-500 ease-out-quint group-hover:-rotate-12"
-          >
-            <rect
-              x="6.5"
-              y="1.5"
-              width="11"
-              height="21"
-              rx="2.5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-            <line
-              x1="6.5"
-              y1="12"
-              x2="17.5"
-              y2="12"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-            <text
-              x="12"
-              y="9.6"
-              textAnchor="middle"
-              fontFamily="Cinzel, serif"
-              fontSize="6"
-              fill="currentColor"
-            >
-              VI
-            </text>
-            <text
-              x="12"
-              y="20"
-              textAnchor="middle"
-              fontFamily="Cinzel, serif"
-              fontSize="6"
-              fill="currentColor"
-            >
-              III
-            </text>
-          </svg>
-          <span className="font-display text-lg font-semibold tracking-[0.2em] text-travertine-100">
-            TRIMINOX
+          <LogoMark />
+          <span className="font-display text-lg font-semibold tracking-[0.12em] text-graphite-900">
+            {dict.hero.title.toUpperCase()}
           </span>
         </Link>
 
-        <nav aria-label="Navegação principal" className="hidden md:block">
-          <ul className="flex items-center gap-1">
-            {NAV.map((item) => (
+        <nav aria-label={dict.common.primaryNav} className="hidden lg:block">
+          <ul className="flex items-center gap-0.5">
+            {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="inline-flex min-h-11 items-center rounded-md px-3.5 text-sm text-travertine-300 transition-colors hover:text-aureum-300"
+                  className="inline-flex min-h-11 items-center rounded-full px-3.5 font-display text-sm font-medium text-graphite-600 transition-colors hover:bg-cream-200 hover:text-crimson"
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
-            <li className="ml-2">
-              <Link
-                href="/#pedido"
-                className="inline-flex min-h-11 items-center rounded-md bg-aureum-500 px-5 text-sm font-semibold text-ink-950 transition-transform duration-200 hover:bg-aureum-300 active:scale-[0.97]"
-              >
-                Fazer pedido
-              </Link>
-            </li>
           </ul>
         </nav>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="menu-mobile"
-          className="inline-flex size-11 items-center justify-center rounded-md border border-travertine-300/20 text-travertine-100 transition-colors hover:border-aureum-400/60 md:hidden"
-        >
-          <span className="sr-only">
-            {open ? "Fechar menu" : "Abrir menu"}
+        <div className="flex shrink-0 items-center gap-2">
+          <span className="hidden sm:block">
+            <LanguageSwitcher />
           </span>
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            className={`size-5 transition-transform duration-300 ${
-              open ? "rotate-90" : ""
-            }`}
+          <Link
+            href="/regulamento"
+            className="font-display hidden min-h-11 items-center rounded-full bg-crimson px-5 text-sm font-semibold text-cream-50 transition-colors duration-200 hover:bg-crimson-600 md:inline-flex"
           >
-            {open ? (
-              <path
-                d="M6 6l12 12M18 6L6 18"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-              />
-            ) : (
-              <path
-                d="M3.5 7h17M3.5 12h17M3.5 17h17"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-              />
-            )}
-          </svg>
-        </button>
+            {dict.nav.rules}
+          </Link>
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
+            aria-label={open ? dict.common.closeMenu : dict.common.openMenu}
+            className="inline-flex size-11 items-center justify-center rounded-full border-2 border-graphite-200 text-graphite-700 transition-colors hover:border-crimson hover:text-crimson lg:hidden"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
+              {open ? (
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              ) : (
+                <path
+                  d="M3.5 7h17M3.5 12h17M3.5 17h17"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {open ? (
         <div
           id="menu-mobile"
-          className="border-t border-travertine-300/12 bg-ink-950/97 backdrop-blur-md md:hidden"
+          className="border-t-2 border-cream-300 bg-cream/97 backdrop-blur-md lg:hidden"
         >
-          <nav aria-label="Navegação móvel" className="px-5 py-4">
+          <nav aria-label={dict.common.mobileNav} className="px-5 py-4">
             <ul className="flex flex-col">
-              {NAV.map((item) => (
+              {nav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="flex min-h-12 items-center border-b border-travertine-300/10 text-travertine-200"
+                    className="flex min-h-12 items-center border-b border-cream-300 font-display text-graphite-700"
                   >
                     {item.label}
                   </Link>
                 </li>
               ))}
-              <li className="pt-4">
-                <Link
-                  href="/#pedido"
-                  onClick={() => setOpen(false)}
-                  className="flex min-h-12 items-center justify-center rounded-md bg-aureum-500 font-semibold text-ink-950"
-                >
-                  Fazer pedido
-                </Link>
-              </li>
             </ul>
+            <div className="mt-4 flex flex-col gap-3">
+              <Link
+                href="/regulamento"
+                onClick={() => setOpen(false)}
+                className="font-display inline-flex min-h-12 items-center justify-center rounded-full bg-crimson font-semibold text-cream-50"
+              >
+                {dict.nav.rules}
+              </Link>
+              <div className="flex justify-center">
+                <LanguageSwitcher />
+              </div>
+            </div>
           </nav>
         </div>
       ) : null}
-
-      {/* Indicador de progresso de leitura */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-gradient-to-r from-porphyry-500 via-aureum-400 to-aureum-300 transition-transform duration-150 ease-out will-change-transform"
-        style={{ transform: `scaleX(${progress})` }}
-      />
     </header>
   );
 }

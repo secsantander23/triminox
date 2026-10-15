@@ -63,11 +63,11 @@ export function StatCounters({ stats }: { stats: readonly Stat[] }) {
     <dl ref={ref} className="grid gap-8 sm:grid-cols-3">
       {stats.map((s, i) => (
         <div key={s.label} className="text-center sm:text-left">
-          <dd className="numeral font-display text-4xl font-bold text-aureum-400 sm:text-5xl">
+          <dd className="numeral font-display text-4xl font-bold text-crimson sm:text-5xl">
             {display[i]}
             {s.suffix}
           </dd>
-          <dt className="mt-2 text-sm text-travertine-300">{s.label}</dt>
+          <dt className="mt-2 text-sm text-graphite-500">{s.label}</dt>
         </div>
       ))}
     </dl>
