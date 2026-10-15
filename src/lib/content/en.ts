@@ -86,6 +86,9 @@ export const en: Dictionary = {
     wildcardTitle: "3 wildcard pieces",
     wildcardBody:
       "A wildcard fits any piece without having to respect the usual sum rule. It is the escape valve for a game that has closed in too early.",
+    numbersTitle: "Roman numerals, from 0 to 5",
+    numbersBody:
+      "The numbers on the tips run from 0 to 5 and are written in roman numerals. There are exactly 56 possible combinations of three numbers — a set small enough to hold in your hand and large enough that the game does not end in three moves.",
     breakdownTitle: "Three parts of the set",
     catalogTitle: "Tap to inspect",
     catalogLede: "All 56 numbered pieces and the 3 wildcards, one by one.",
@@ -191,22 +194,6 @@ export const en: Dictionary = {
     note: "The regulations are written and reviewed by the project team. This presentation page is a summary — if in doubt, the official regulations win.",
   },
 
-  credits: {
-    eyebrow: "Credits",
-    title: "Created by",
-    membersLabel: "Members",
-    classLabel: "Class",
-    schoolLabel: "School",
-    courseLabel: "Course",
-    yearLabel: "Year",
-    placeholder: "To fill in",
-    placeholderHint:
-      "Replace these fields in `src/lib/content/pt.ts` and `src/lib/content/en.ts` with the group's names.",
-    techLabel: "Built with",
-    techBody:
-      "HTML, CSS and JavaScript with a static build, published on GitHub Pages.",
-  },
-
   faq: {
     eyebrow: "Questions",
     title: "Frequently asked",
@@ -241,26 +228,106 @@ export const en: Dictionary = {
   regulamento: {
     eyebrow: "Official regulations",
     title: "Trimino regulations",
-    lede: "The complete rules of Trimino, with the board setup, the sum rule, the hexagon and the effect cards.",
+    lede: "The complete rules of Trimino: the set, preparing a game, the matching rule, the hexagon, the effect cards and the end of the game.",
     backCta: "Back to the presentation",
-    statusTitle: "Regulations in progress",
-    statusBody:
-      "This page is ready to receive the official text of the regulations, written by the project team. As soon as the final version is delivered it will be published here — in Portuguese and, once available, in English.",
-    statusBadge: "Awaiting the final text",
-    placeholderHeading: "Reserved space for the regulations",
-    placeholderBody:
-      "The official content goes here. It is written by the other member of the group and should be inserted exactly as approved, without changes.",
-    howToFill: "How to fill in this page",
-    howToFillSteps: [
-      "Replace this block with the final text of the regulations.",
-      "Keep the headings at section level so the table of contents builds itself.",
-      "If there is an official PDF, put the file in `public/` and use the slot below.",
-    ],
-    pdfTitle: "Official document (PDF)",
-    pdfSlotLabel: "Regulations PDF",
-    pdfSlotHint: "No PDF linked yet.",
-    pdfSlotFile: "Place the file at `public/regulamento.pdf` to display it here.",
     tocTitle: "On this page",
+    reviewTitle: "Text under review",
+    reviewBody:
+      "This version was written from the project brief and covers only the rules defined so far. The team member responsible for the regulations should review and complete this text before it is treated as the official version.",
+
+    sections: [
+      {
+        numeral: "I",
+        title: "Objective",
+        paragraphs: [
+          "The goal of the game is to finish it being the first player left with no pieces.",
+          "The game ends the moment a player empties their hand. That player wins.",
+        ],
+      },
+      {
+        numeral: "II",
+        title: "The set",
+        paragraphs: ["A game uses a set of 59 pieces, made up of two groups:"],
+        list: [
+          "56 numbered pieces: every possible combination of three numbers between 0 and 5, without repeating equivalent combinations. Because the order of the tips does not change the piece, reordering the numbers does not create a new piece.",
+          "3 wildcard pieces: they fit any piece, without having to respect the usual sum rule.",
+        ],
+        note: "The numbers are printed in roman numerals, from 0 to 5.",
+      },
+      {
+        numeral: "III",
+        title: "Preparing a game",
+        paragraphs: ["Before the first move:"],
+        list: [
+          "The set is shuffled.",
+          "Each player is dealt eight pieces.",
+          "The game starts with whoever holds the highest-value piece. A piece's value is the sum of its three numbers.",
+        ],
+      },
+      {
+        numeral: "IV",
+        title: "The matching rule",
+        paragraphs: [
+          "Every piece has three tips. Each edge of a piece separates one tip on one side from two tips on the other.",
+          "To connect two pieces, the sum of the numbers on the two tips of one side must equal the sum of the two tips on the matching side of the other piece.",
+        ],
+        note: "If both sides of the same piece add up to the same value, either edge can be used to connect it.",
+      },
+      {
+        numeral: "V",
+        title: "The wildcard piece",
+        paragraphs: [
+          "A wildcard piece ignores the sum rule. It fits any piece without the sums on either side having to be equal.",
+        ],
+      },
+      {
+        numeral: "VI",
+        title: "The hexagon",
+        paragraphs: [
+          "Six pieces arranged around an empty centre close a hexagon.",
+          "In that layout every piece splits its three tips between two sides, and the sum rule has to hold at all six joins.",
+          "Closing a hexagon earns the player the right to draw a random effect card.",
+        ],
+      },
+      {
+        numeral: "VII",
+        title: "The effect cards",
+        paragraphs: ["There are three effect cards:"],
+        list: [
+          "Wildcard: lets you connect a piece without having to respect the sum rule.",
+          "Hand Swap: the player picks another player and the two of them swap every piece, without seeing what they will receive beforehand.",
+          "Piece Swap: the player can look at the next player's pieces and pick one to exchange for one of their own.",
+        ],
+        paragraphsAfter: [
+          "Once used, the card goes back to the centre of the table and is not discarded.",
+          "A player does not have to resolve the effect the moment they receive the card: they can hold it and play it when it is most useful.",
+        ],
+      },
+      {
+        numeral: "VIII",
+        title: "End of the game",
+        paragraphs: ["The game ends as soon as a player is left with no pieces."],
+      },
+    ],
+
+    pendingTitle: "Still to be decided",
+    pendingIntro:
+      "The points below were not defined in the project material and have not been invented here. The team needs to decide on them before the regulations can be considered complete:",
+    pending: [
+      "How many players take part in a game.",
+      "What to do when a player has no piece that fits on their turn.",
+      "Where pieces come from once a player empties their hand, and whether the set continues or ends there.",
+      "How a tie on the highest-value piece, which decides who starts, is resolved.",
+      "Whether the three cards are the only cards in the deck or whether others exist.",
+    ],
+
+    pdfTitle: "Official document (PDF)",
+    pdfDescription:
+      "The complete regulations in a single file, ready to print or hand out.",
+    pdfFile: "/regulamento.pdf",
+    pdfOpen: "Open the PDF",
+    pdfDownload: "Download the PDF",
+    pdfEmbedLabel: "Trimino regulations (PDF)",
   },
 
   footer: {

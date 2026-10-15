@@ -6,6 +6,27 @@
  * Strings com `{chaves}` recebem substituição via `t()`.
  */
 
+/**
+ * Uma seção do regulamento.
+ *
+ * O tipo é declarado explicitamente porque `as const` transformaria cada seção
+ * em um tipo literal distinto, e o TypeScript não encontraria os campos
+ * opcionais (`list`, `note`, `paragraphsAfter`) na união das seções que não os
+ * têm.
+ */
+export type RegulationSection = {
+  numeral: string;
+  title: string;
+  /** Parágrafos introdutórios da seção. */
+  paragraphs: readonly string[];
+  /** Lista com marcadores, opcional. */
+  list?: readonly string[];
+  /** Destaque em bloco, opcional. */
+  note?: string;
+  /** Parágrafos exibidos depois da lista, opcional. */
+  paragraphsAfter?: readonly string[];
+};
+
 export const pt = {
   meta: {
     title: "Triminó — Três pontas. Uma nova forma de jogar.",
@@ -84,6 +105,9 @@ export const pt = {
     wildcardTitle: "3 peças coringa",
     wildcardBody:
       "O coringa encaixa em qualquer peça sem respeitar a regra habitual da soma. Ele é a válvula de escape de uma partida que fechou demais rápido.",
+    numbersTitle: "Algarismos romanos, de 0 a 5",
+    numbersBody:
+      "Os números das pontas vão de 0 a 5 e são escritos em algarismos romanos. São exatamente 56 as combinações possíveis de três números — um baralho pequeno o bastante para caber na mão e grande o bastante para a partida não acabar em três jogadas.",
     breakdownTitle: "Três partes do baralho",
     catalogTitle: "Toque para inspecionar",
     catalogLede: "As 56 peças numeradas e as 3 coringas, uma por uma.",
@@ -187,21 +211,6 @@ export const pt = {
     note: "O regulamento é escrito e revisado pelo time do projeto. Esta página de apresentação é um resumo — em caso de dúvida, o regulamento oficial manda.",
   },
 
-  credits: {
-    eyebrow: "Créditos",
-    title: "Feito por",
-    membersLabel: "Integrantes",
-    classLabel: "Turma",
-    schoolLabel: "Escola",
-    courseLabel: "Disciplina",
-    yearLabel: "Ano",
-    placeholder: "Preencher",
-    placeholderHint:
-      "Substitua estes campos em `src/lib/content/pt.ts` e `src/lib/content/en.ts` com os nomes do grupo.",
-    techLabel: "Desenvolvido com",
-    techBody: "HTML, CSS e JavaScript com saída estática, publicado no GitHub Pages.",
-  },
-
   faq: {
     eyebrow: "Perguntas",
     title: "Dúvidas frequentes",
@@ -236,26 +245,114 @@ export const pt = {
   regulamento: {
     eyebrow: "Regulamento oficial",
     title: "Regulamento do Triminó",
-    lede: "O texto completo das regras do Triminó, com o setup da mesa, a regra da soma, o hexágono e as cartas de efeito.",
+    lede: "O texto completo das regras do Triminó: o baralho, a preparação da partida, a regra do encaixe, o hexágono, as cartas de efeito e o fim do jogo.",
     backCta: "Voltar para a apresentação",
-    statusTitle: "Regulamento em elaboração",
-    statusBody:
-      "Esta página está pronta para receber o texto oficial do regulamento, escrito pelo time do projeto. Assim que a versão final for entregue, ela é publicada aqui — em português e, quando disponível, em inglês.",
-    statusBadge: "Aguardando o texto final",
-    placeholderHeading: "Espaço reservado para o regulamento",
-    placeholderBody:
-      "O conteúdo oficial entra aqui. Ele é escrito pelo outro integrante do grupo e deve ser inserido exatamente como aprovado, sem alterações.",
-    howToFill: "Como preencher esta página",
-    howToFillSteps: [
-      "Substitua este bloco pelo texto final do regulamento.",
-      "Mantenha os títulos em nível de seção para gerar o sumário.",
-      "Se houver um PDF oficial, coloque o arquivo em `public/` e use o espaço abaixo.",
-    ],
-    pdfTitle: "Documento oficial em PDF",
-    pdfSlotLabel: "PDF do regulamento",
-    pdfSlotHint: "Nenhum PDF vinculado ainda.",
-    pdfSlotFile: "Coloque o arquivo em `public/regulamento.pdf` para exibi-lo aqui.",
     tocTitle: "Nesta página",
+    reviewTitle: "Texto em revisão",
+    reviewBody:
+      "Esta versão foi redigida a partir do briefing do projeto e cobre apenas as regras definidas até agora. O integrante responsável pelo regulamento deve revisar e completar este texto antes de ele ser tratado como versão oficial.",
+
+    /** Seções numeradas do regulamento, na ordem em que aparecem na mesa. */
+    sections: [
+      {
+        numeral: "I",
+        title: "Objetivo",
+        paragraphs: [
+          "O objetivo da partida é terminar o jogo sendo o primeiro jogador a ficar sem peças.",
+          "A partida termina no instante em que um jogador esvazia a mão. Esse jogador vence.",
+        ],
+      },
+      {
+        numeral: "II",
+        title: "O baralho",
+        paragraphs: [
+          "A partida usa um baralho de 59 peças, formado por dois grupos:",
+        ],
+        list: [
+          "56 peças numeradas: todas as combinações possíveis de três números entre 0 e 5, sem repetir combinações equivalentes. Como a ordem das pontas não altera a peça, reordenar os números não cria uma peça nova.",
+          "3 peças coringa: encaixam em qualquer peça, sem respeitar a regra habitual da soma.",
+        ],
+        note: "Os números são representados em algarismos romanos, de 0 a 5.",
+      },
+      {
+        numeral: "III",
+        title: "Preparação da partida",
+        paragraphs: ["Antes da primeira jogada:"],
+        list: [
+          "O baralho é embaralhado.",
+          "Cada jogador recebe oito peças.",
+          "Começa a partida quem tiver a peça de maior valor. O valor de uma peça é a soma dos seus três números.",
+        ],
+      },
+      {
+        numeral: "IV",
+        title: "A regra do encaixe",
+        paragraphs: [
+          "Cada peça tem três pontas. Toda aresta de uma peça separa uma ponta de um lado e duas pontas do outro.",
+          "Para encaixar duas peças, a soma dos números nas duas pontas de um lado deve ser igual à soma das duas pontas do lado correspondente da outra peça.",
+        ],
+        note: "Se os dois lados de uma mesma peça somarem o mesmo valor, qualquer uma das arestas pode ser usada no encaixe.",
+      },
+      {
+        numeral: "V",
+        title: "A peça coringa",
+        paragraphs: [
+          "A peça coringa ignora a regra da soma. Ela encaixa em qualquer peça sem que as somas dos dois lados precisem ser iguais.",
+        ],
+      },
+      {
+        numeral: "VI",
+        title: "O hexágono",
+        paragraphs: [
+          "Seis peças dispostas em torno de um ponto vazio fecham um hexágono.",
+          "Nesse arranjo cada peça divide suas três pontas entre dois lados, e a regra da soma precisa valer em todas as seis junções.",
+          "Fechar um hexágono dá ao jogador o direito de receber uma carta de efeito aleatória.",
+        ],
+      },
+      {
+        numeral: "VII",
+        title: "As cartas de efeito",
+        paragraphs: [
+          "São três cartas de efeito:",
+        ],
+        list: [
+          "Coringa: permite conectar uma peça sem respeitar a regra da soma.",
+          "Troca de Mão: o jogador escolhe outro jogador e ambos trocam todas as peças, sem ver antecipadamente as peças que receberão.",
+          "Troca de Peça: o jogador pode ver as peças do próximo jogador e escolher uma para trocar por uma das suas.",
+        ],
+        paragraphsAfter: [
+          "Depois de utilizada, a carta retorna ao centro da mesa e não é descartada.",
+          "O jogador não precisa resolver o efeito imediatamente após receber a carta: pode guardá-la e usá-la quando for mais vantajoso.",
+        ],
+      },
+      {
+        numeral: "VIII",
+        title: "Fim da partida",
+        paragraphs: [
+          "A partida termina assim que um jogador ficar com zero peças.",
+        ],
+      },
+    ] satisfies readonly RegulationSection[],
+
+    /** Casos que o briefing do projeto ainda não define. */
+    pendingTitle: "Pontos ainda a definir",
+    pendingIntro:
+      "As regras abaixo não estavam definidas no material do projeto e não foram inventadas aqui. Precisam de decisão do time antes de o regulamento ser considerado completo:",
+    pending: [
+      "Quantos jogadores participem de uma partida.",
+      "O que fazer quando o jogador não tem nenhuma peça que encaixe na sua vez.",
+      "De onde saem as peças depois que um jogador esvazia a mão, e se o baralho continua ou termina ali.",
+      "Como se resolve um empate na peça de maior valor, que define quem começa.",
+      "Se as três cartas são as únicas do baralho de cartas ou se existem outras.",
+    ],
+
+    pdfTitle: "Documento oficial em PDF",
+    pdfDescription:
+      "O regulamento completo em um único arquivo, pronto para imprimir ou distribuir.",
+    pdfFile: "/regulamento.pdf",
+    pdfOpen: "Abrir o PDF",
+    pdfDownload: "Baixar o PDF",
+    pdfEmbedLabel: "Regulamento do Triminó em PDF",
   },
 
   footer: {

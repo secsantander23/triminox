@@ -91,8 +91,8 @@ export default function HomePage() {
       ),
     },
     {
-      title: dict.credits.placeholder,
-      body: dict.about.highlight,
+      title: dict.pieces.numbersTitle,
+      body: dict.pieces.numbersBody,
       art: (
         <div className="flex gap-2">
           <TriminoPiece tips={[2, 3, 5]} tone="blue" size="sm" />
@@ -412,78 +412,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 8 · Créditos ─────────────────────────────────────── */}
+      {/* ── 8 · Perguntas ───────────────────────────────────── */}
       <section
-        id="creditos"
-        aria-labelledby="creditos-title"
-        className="scroll-mt-28 py-20 sm:py-28"
+        id="perguntas"
+        aria-labelledby="perguntas-title"
+        className="border-t-2 border-cream-300 bg-cream-50 py-20 sm:py-28"
       >
-        <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
+        <div className="mx-auto w-full max-w-3xl px-5 sm:px-8">
           <SectionHeading
             index={7}
-            eyebrow={dict.credits.eyebrow}
-            title={dict.credits.title}
-            id="creditos-title"
+            eyebrow={dict.faq.eyebrow}
+            title={dict.faq.title}
+            id="perguntas-title"
           />
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { label: dict.credits.membersLabel, value: dict.credits.placeholder },
-              { label: dict.credits.classLabel, value: dict.credits.placeholder },
-              { label: dict.credits.schoolLabel, value: dict.credits.placeholder },
-              { label: dict.credits.yearLabel, value: "2026" },
-            ].map((field, index) => (
-              <div
-                key={field.label}
+          <div className="mt-14 space-y-3">
+            {dict.faq.items.map((item, index) => (
+              <details
+                key={item.q}
                 data-reveal
-                className="reveal card-soft p-6 text-center"
-                style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
+                className="card-soft reveal group px-6 py-1 [&_summary::-webkit-details-marker]:hidden"
+                style={{ "--reveal-delay": `${index * 60}ms` } as React.CSSProperties}
               >
-                <p className="text-xs tracking-[0.16em] text-graphite-500 uppercase">
-                  {field.label}
-                </p>
-                <p className="font-display mt-2 text-lg font-semibold text-graphite-800">
-                  {field.value}
-                </p>
-              </div>
+                <summary className="font-display flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 font-medium text-graphite-900 transition-colors hover:text-crimson">
+                  {item.q}
+                  <span
+                    aria-hidden="true"
+                    className="text-2xl font-bold text-crimson transition-transform duration-300 group-open:rotate-45"
+                  >
+                    +
+                  </span>
+                </summary>
+                <div className="border-t border-cream-300 py-5 leading-relaxed text-graphite-600">
+                  {item.a}
+                </div>
+              </details>
             ))}
-          </div>
-
-          <p
-            data-reveal
-            className="reveal mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-graphite-500"
-          >
-            {dict.credits.placeholderHint}
-          </p>
-
-          {/* ── Perguntas frequentes ───────────────────────────── */}
-          <div className="mt-20">
-            <h3 className="font-display text-center text-[clamp(1.6rem,4vw,2.4rem)] font-bold text-graphite-900">
-              {dict.faq.title}
-            </h3>
-            <div className="mx-auto mt-10 max-w-3xl space-y-3">
-              {dict.faq.items.map((item, index) => (
-                <details
-                  key={item.q}
-                  data-reveal
-                  className="card-soft reveal group px-6 py-1 [&_summary::-webkit-details-marker]:hidden"
-                  style={{ "--reveal-delay": `${index * 60}ms` } as React.CSSProperties}
-                >
-                  <summary className="font-display flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 font-medium text-graphite-900 transition-colors hover:text-crimson">
-                    {item.q}
-                    <span
-                      aria-hidden="true"
-                      className="text-2xl font-bold text-crimson transition-transform duration-300 group-open:rotate-45"
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <div className="border-t border-cream-300 py-5 leading-relaxed text-graphite-600">
-                    {item.a}
-                  </div>
-                </details>
-              ))}
-            </div>
           </div>
         </div>
       </section>

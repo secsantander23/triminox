@@ -78,12 +78,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-cream-300/15 pt-8 text-sm text-cream-300/70 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 border-t border-cream-300/15 pt-8 text-sm text-cream-300/70">
           <p>
             © {year} · {dict.footer.rights}
-          </p>
-          <p className="numeral">
-            {dict.credits.classLabel}: {dict.credits.placeholder}
           </p>
         </div>
       </div>
