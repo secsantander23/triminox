@@ -231,9 +231,6 @@ export const en: Dictionary = {
     lede: "The complete rules of Trimino: the set, preparing a game, the matching rule, the hexagon, the effect cards and the end of the game.",
     backCta: "Back to the presentation",
     tocTitle: "On this page",
-    reviewTitle: "Text under review",
-    reviewBody:
-      "This version was written from the project brief and covers only the rules defined so far. The team member responsible for the regulations should review and complete this text before it is treated as the official version.",
 
     sections: [
       {
@@ -308,17 +305,6 @@ export const en: Dictionary = {
         title: "End of the game",
         paragraphs: ["The game ends as soon as a player is left with no pieces."],
       },
-    ],
-
-    pendingTitle: "Still to be decided",
-    pendingIntro:
-      "The points below were not defined in the project material and have not been invented here. The team needs to decide on them before the regulations can be considered complete:",
-    pending: [
-      "How many players take part in a game.",
-      "What to do when a player has no piece that fits on their turn.",
-      "Where pieces come from once a player empties their hand, and whether the set continues or ends there.",
-      "How a tie on the highest-value piece, which decides who starts, is resolved.",
-      "Whether the three cards are the only cards in the deck or whether others exist.",
     ],
 
     pdfTitle: "Official document (PDF)",

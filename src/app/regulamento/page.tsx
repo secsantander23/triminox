@@ -78,25 +78,8 @@ export default function RegulamentoPage() {
         </div>
       </section>
 
-      {/* ── Aviso de revisão ─────────────────────────────────── */}
-      <section className="pb-4">
-        <div className="mx-auto w-full max-w-4xl px-5 sm:px-8">
-          <div
-            data-reveal
-            className="reveal rounded-3xl border-2 border-dashed border-cobalt bg-cobalt-50 p-7 sm:p-8"
-          >
-            <p className="font-display mb-2 text-xs font-semibold tracking-[0.14em] text-cobalt uppercase">
-              {regulamento.reviewTitle}
-            </p>
-            <p className="leading-relaxed text-graphite-600">
-              {regulamento.reviewBody}
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* ── Sumário ─────────────────────────────────────────── */}
-      <section aria-labelledby="sumario-title" className="py-8">
+      <section aria-labelledby="sumario-title" className="pt-10">
         <div className="mx-auto w-full max-w-4xl px-5 sm:px-8">
           <h2 id="sumario-title" className="sr-only">
             {regulamento.tocTitle}
@@ -190,41 +173,6 @@ export default function RegulamentoPage() {
                 ))}
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Pontos a definir ─────────────────────────────────── */}
-      <section aria-labelledby="pendente-title" className="py-10">
-        <div className="mx-auto w-full max-w-4xl px-5 sm:px-8">
-          <div
-            data-reveal
-            className="reveal rounded-3xl border-2 border-solar bg-solar-50 p-8 sm:p-10"
-          >
-            <h2
-              id="pendente-title"
-              className="font-display text-2xl font-bold text-graphite-900"
-            >
-              {regulamento.pendingTitle}
-            </h2>
-            <p className="mt-3 leading-relaxed text-graphite-600">
-              {regulamento.pendingIntro}
-            </p>
-            <ol className="mt-6 space-y-3">
-              {regulamento.pending.map((item, index) => (
-                <li key={item} className="flex gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="numeral mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-solar text-xs font-bold text-graphite-900"
-                  >
-                    {index + 1}
-                  </span>
-                  <span className="leading-relaxed text-graphite-700">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ol>
           </div>
         </div>
       </section>

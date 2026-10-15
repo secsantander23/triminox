@@ -248,9 +248,6 @@ export const pt = {
     lede: "O texto completo das regras do Triminó: o baralho, a preparação da partida, a regra do encaixe, o hexágono, as cartas de efeito e o fim do jogo.",
     backCta: "Voltar para a apresentação",
     tocTitle: "Nesta página",
-    reviewTitle: "Texto em revisão",
-    reviewBody:
-      "Esta versão foi redigida a partir do briefing do projeto e cobre apenas as regras definidas até agora. O integrante responsável pelo regulamento deve revisar e completar este texto antes de ele ser tratado como versão oficial.",
 
     /** Seções numeradas do regulamento, na ordem em que aparecem na mesa. */
     sections: [
@@ -333,18 +330,6 @@ export const pt = {
         ],
       },
     ] satisfies readonly RegulationSection[],
-
-    /** Casos que o briefing do projeto ainda não define. */
-    pendingTitle: "Pontos ainda a definir",
-    pendingIntro:
-      "As regras abaixo não estavam definidas no material do projeto e não foram inventadas aqui. Precisam de decisão do time antes de o regulamento ser considerado completo:",
-    pending: [
-      "Quantos jogadores participem de uma partida.",
-      "O que fazer quando o jogador não tem nenhuma peça que encaixe na sua vez.",
-      "De onde saem as peças depois que um jogador esvazia a mão, e se o baralho continua ou termina ali.",
-      "Como se resolve um empate na peça de maior valor, que define quem começa.",
-      "Se as três cartas são as únicas do baralho de cartas ou se existem outras.",
-    ],
 
     pdfTitle: "Documento oficial em PDF",
     pdfDescription:
